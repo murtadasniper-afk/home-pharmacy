@@ -1,0 +1,8 @@
+{
+  "appId": "com.homepharmacy.app",
+  "appName": "صيدلية المنزل",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}
