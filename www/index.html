@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#137547">
+<title>صيدلية المنزل</title>
+
+<style>
+:root {
+  --green: #137547;
+  --green-dark: #075b36;
+  --green-light: #e7f5ec;
+  --bg: #f5f8f6;
+  --white: #ffffff;
+  --text: #1c3026;
+  --muted: #78877e;
+  --border: #e3ebe5;
+  --orange: #f29b38;
+  --red: #d94747;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Arial, sans-serif;
+}
+
+button, input, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+.app {
+  width: 100%;
+  max-width: 600px;
+  min-height: 100vh;
+  margin: auto;
+  background: var(--bg);
+  padding-bottom: 90px;
+}
+
+header {
+  padding: 18px 18px 22px;
+  color: white;
+  background: linear-gradient(135deg, var(--green-dark), var(--green));
+  border-radius: 0 0 25px 25px;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.brand-logo {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background: white;
+  color: var(--green);
+  font-size: 28px;
+}
+
+.brand-name {
+  font-size: 19px;
+  font-weight: 900;
+}
+
+.brand-subtitle {
+  margin-top: 3px;
+  font-size: 11px;
+  color: #d8f1e2;
+}
+
+.language-btn {
+  flex-shrink: 0;
+  border: 1px solid #ffffff70;
+  border-radius: 11px;
+  padding: 8px 11px;
+  background: #ffffff12;
+  color: white;
+}
+
+.welcome {
+  margin-top: 22px;
+}
+
+.welcome h1 {
+  margin: 0 0 8px;
+  font-size: 25px;
+  line-height: 1.5;
+}
+
+.welcome p {
+  margin: 0;
+  color: #d8f1e2;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.search-wrap {
+  position: relative;
+  margin-top: 19px;
+}
+
+.search-wrap input {
+  width: 100%;
+  padding: 15px 44px 15px 14px;
+  border: 0;
+  border-radius: 15px;
+  background: white;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 15px;
+  color: var(--muted);
+}
+
+main {
+  padding: 20px 15px;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.section-heading small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.categories {
+  display: flex;
+  gap: 9px;
+  overflow-x: auto;
+  padding: 2px 1px 9px;
+  scrollbar-width: none;
+}
+
+.categories::-webkit-scrollbar {
+  display: none;
+}
+
+.category {
+  flex-shrink: 0;
+  min-width: 86px;
+  padding: 13px 9px;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: white;
+  color: var(--text);
+  text-align: center;
+}
+
+.category .emoji {
+  display: block;
+  font-size: 24px;
+  margin-bottom: 7px;
+}
+
+.category span:last-child {
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.category.active {
+  color: var(--green-dark);
+  background: var(--green-light);
+  border-color: #a7d8b8;
+}
+
+.promo {
+  margin: 15px 0 25px;
+  padding: 17px;
+  border-radius: 18px;
+  background: linear-gradient(120deg, #e0f5e6, #f0faf2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.promo h3 {
+  margin: 0 0 7px;
+  font-size: 17px;
+}
+
+.promo p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.promo-icon {
+  font-size: 48px;
+  flex-shrink: 0;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.product-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  background: white;
+}
+
+.product-image {
+  position: relative;
+  height: 125px;
+  display: grid;
+  place-items: center;
+  background: #edf6ef;
+  font-size: 53px;
+}
+
+.product-badge {
+  position: absolute;
+  top: 9px;
+  right: 8px;
+  padding: 4px 7px;
+  border-radius: 7px;
+  background: #fff0dc;
+  color: #995315;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.product-info {
+  padding: 11px;
+}
+
+.product-name {
+  min-height: 38px;
+  margin: 0 0 5px;
+  font-size: 13px;
+  line-height: 1.6;
+  font-weight: 850;
+}
+
+.product-description {
+  min-height: 17px;
+  margin-bottom: 9px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.product-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.product-price {
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--green);
+}
+
+.add-btn {
+  width: 35px;
+  height: 35px;
+  border: 0;
+  border-radius: 11px;
+  background: var(--green);
+  color: white;
+  font-size: 21px;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  padding: 30px 10px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.info-box {
+  margin-top: 23px;
+  padding: 15px;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: white;
+}
+
+.info-box h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+.info-box p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+footer {
+  padding: 20px 15px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 2;
+}
+
+.bottom-nav {
+  position: fixed;
+  z-index: 10;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 600px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 9px 5px calc(9px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border);
+  background: #ffffffef;
+  backdrop-filter: blur(12px);
+}
+
+.nav-btn {
+  position: relative;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 10px;
+  padding: 5px 2px;
+}
+
+.nav-btn .nav-icon {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 21px;
+}
+
+.nav-btn.active {
+  color: var(--green);
+  font-weight: 900;
+}
+
+.cart-count {
+  position: absolute;
+  top: 0;
+  left: calc(50% + 5px);
+  min-width: 17px;
+  height: 17px;
+  display: none;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--red);
+  color: white;
+  font-size: 10px;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.cart-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.cart-line strong {
+  font-size: 13px;
+}
+
+.cart-line small {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+}
+
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qty-controls button {
+  width: 29px;
+  height: 29px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: white;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+  font-weight: 900;
+}
+
+.form-field {
+  display: block;
+  width: 100%;
+  margin: 12px 0;
+  padding: 13px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: white;
+  color: var(--text);
+}
+
+.action-btn {
+  width: 100%;
+  padding: 14px;
+  border: 0;
+  border-radius: 13px;
+  background: var(--green);
+  color: white;
+  font-weight: 850;
+}
+
+.secondary-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 9px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: white;
+  color: var(--text);
+}
+
+.notice {
+  margin: 12px 0;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--green-light);
+  color: var(--green-dark);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.ltr {
+  direction: ltr;
+  text-align: left;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (min-width: 480px) {
+  main {
+    padding-inline: 22px;
+  }
+
+  .product-image {
+    height: 145px;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<header>
+  <div class="header-row">
+    <div class="brand">
+      <div class="brand-logo" aria-hidden="true">✚</div>
+      <div>
+        <div class="brand-name" id="pharmacyName">صيدلية المنزل</div>
+        <div class="brand-subtitle" data-i18n="subtitle">صحتك وراحتك أولويتنا</div>
+      </div>
+    </div>
+
+    <button class="language-btn" id="languageBtn" type="button">English</button>
+  </div>
+
+  <div class="welcome">
+    <h1 data-i18n="welcome">أهلًا بك في صيدليتك</h1>
+    <p data-i18n="welcomeText">ابحث عن احتياجاتك الصحية والعناية اليومية بسهولة.</p>
+  </div>
+
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input id="searchInput" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="ابحث عن منتج..." autocomplete="off">
+  </div>
+</header>
+
+<main>
+  <section class="page active" id="homePage">
+    <div class="section-heading">
+      <h2 data-i18n="categories">الأقسام</h2>
+      <small data-i18n="browse">تصفح المنتجات</small>
+    </div>
+
+    <div class="categories" id="categories"></div>
+
+    <div class="promo">
+      <div>
+        <h3 data-i18n="promoTitle">اهتم بصحتك كل يوم</h3>
+        <p data-i18n="promoText">تصفح المنتجات واختر ما تحتاجه بسهولة.</p>
+      </div>
+      <div class="promo-icon" aria-hidden="true">🌿</div>
+    </div>
+
+    <div class="section-heading">
+      <h2 data-i18n="products">المنتجات</h2>
+      <small id="productCount"></small>
+    </div>
+
+    <div class="product-grid" id="productGrid"></div>
+
+    <div class="info-box">
+      <h3 data-i18n="pharmacyInfo">معلومات الصيدلية</h3>
+      <p data-i18n="pharmacyInfoText">يمكنك تقديم طلبك من خلال التطبيق. يخضع قبول الطلبات الدوائية لمراجعة الصيدلي والمتطلبات القانونية المعمول بها.</p>
+    </div>
+  </section>
+
+  <section class="page" id="cartPage">
+    <div class="section-heading">
+      <h2 data-i18n="cartTitle">سلة المشتريات</h2>
+    </div>
+
+    <div id="cartItems"></div>
+    <div id="cartEmpty" class="notice" data-i18n="cartEmpty">السلة فارغة. أضف المنتجات التي تحتاجها.</div>
+
+    <div id="checkoutArea" hidden>
+      <div class="total-row">
+        <span data-i18n="total">المجموع</span>
+        <span id="cartTotal">0 د.ع</span>
+      </div>
+
+      <h3 data-i18n="customerInfo">معلومات الطلب</h3>
+
+      <form id="checkoutForm">
+        <input class="form-field" id="customerName" required maxlength="100" autocomplete="name" data-i18n-placeholder="namePlaceholder" placeholder="الاسم الكامل">
+
+        <input class="form-field" id="customerPhone" required type="tel" maxlength="25" autocomplete="tel" data-i18n-placeholder="phonePlaceholder" placeholder="رقم الهاتف">
+
+        <textarea class="form-field" id="customerAddress" required maxlength="500" rows="3" data-i18n-placeholder="addressPlaceholder" placeholder="عنوان التوصيل"></textarea>
+
+        <textarea class="form-field" id="customerNotes" maxlength="500" rows="2" data-i18n-placeholder="notesPlaceholder" placeholder="ملاحظات إضافية (اختياري)"></textarea>
+
+        <label for="deliveryMethod" data-i18n="deliveryLabel">طريقة الاستلام</label>
+        <select class="form-field" id="deliveryMethod">
+          <option value="delivery" data-i18n="deliveryHome">توصيل إلى المنزل</option>
+          <option value="pickup" data-i18n="pickup">الاستلام من الصيدلية</option>
+        </select>
+
+        <div class="notice" data-i18n="demoNotice">هذه واجهة أولية للعرض. لن يُرسل الطلب فعليًا حتى نربط التطبيق بقاعدة بيانات آمنة.</div>
+
+        <button class="action-btn" type="submit" data-i18n="submitOrder">متابعة الطلب</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="page" id="ordersPage">
+    <div class="section-heading">
+      <h2 data-i18n="ordersTitle">طلباتي</h2>
+    </div>
+    <div class="notice" data-i18n="ordersNotice">ستظهر طلباتك هنا بعد ربط التطبيق بنظام الطلبات وتسجيل الدخول.</div>
+  </section>
+
+  <section class="page" id="accountPage">
+    <div class="section-heading">
+      <h2 data-i18n="accountTitle">حسابي</h2>
+    </div>
+
+    <div class="info-box">
+      <h3 data-i18n="guestTitle">التصفح كزائر</h3>
+      <p data-i18n="guestText">يمكنك تصفح المنتجات وإضافة العناصر إلى السلة. سنضيف تسجيل الدخول الاختياري في مرحلة لاحقة.</p>
+    </div>
+
+    <div class="info-box">
+      <h3 data-i18n="contactTitle">التواصل مع الصيدلية</h3>
+      <p data-i18n="contactText">ستُضاف بيانات التواصل وساعات العمل من إعدادات الصيدلية بعد تجهيز لوحة الإدارة.</p>
+    </div>
+
+    <div class="info-box">
+      <h3 data-i18n="languageTitle">اللغة</h3>
+      <button class="secondary-btn" id="languageBtn2" type="button">English</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span id="footerPharmacyName">صيدلية المنزل</span>
+  <br>
+  <span data-i18n="footerText">واجهة أولية — تخضع الطلبات الدوائية لمراجعة الصيدلي.</span>
+</footer>
+
+<nav class="bottom-nav" aria-label="Main navigation">
+  <button class="nav-btn active" data-page="homePage" type="button">
+    <span class="nav-icon">⌂</span>
+    <span data-i18n="navHome">الرئيسية</span>
+  </button>
+
+  <button class="nav-btn" data-page="cartPage" type="button">
+    <span class="nav-icon">🛒</span>
+    <span class="cart-count" id="cartCount">0</span>
+    <span data-i18n="navCart">السلة</span>
+  </button>
+
+  <button class="nav-btn" data-page="ordersPage" type="button">
+    <span class="nav-icon">▤</span>
+    <span data-i18n="navOrders">طلباتي</span>
+  </button>
+
+  <button class="nav-btn" data-page="accountPage" type="button">
+    <span class="nav-icon">♙</span>
+    <span data-i18n="navAccount">حسابي</span>
+  </button>
+</nav>
+
+</div>
+
+<script>
+'use strict';
+
+/*
+  صيدلية المنزل — واجهة أولية.
+  المنتجات أدناه أمثلة تصميمية فقط وليست مخزونًا حقيقيًا.
+  لا يوجد إرسال فعلي للطلبات قبل ربط قاعدة بيانات آمنة.
+*/
+
+const CONFIG = {
+  pharmacyName: 'صيدلية المنزل',
+  currency: 'د.ع'
+};
+
+const categories = [
+  {id:'all', ar:'الكل', en:'All', icon:'✦'},
+  {id:'medicine', ar:'الأدوية', en:'Medicines', icon:'💊'},
+  {id:'beauty', ar:'التجميل', en:'Beauty', icon:'🧴'},
+  {id:'vitamins', ar:'الفيتامينات', en:'Vitamins', icon:'🌿'},
+  {id:'baby', ar:'الأطفال', en:'Baby', icon:'🍼'},
+  {id:'medical', ar:'المستلزمات الطبية', en:'Medical supplies', icon:'🩺'},
+  {id:'general', ar:'مواد عامة', en:'General goods', icon:'🧼'}
+];
+
+/* منتجات توضيحية للواجهة فقط؛ لا تمثل توصية طبية. */
+const products = [
+  {id:1, category:'beauty', icon:'🧴', ar:'مرطب للعناية بالبشرة', en:'Skin moisturizer', descriptionAr:'مثال لمنتج تجميلي', descriptionEn:'Sample beauty product', price:5000, badgeAr:'عناية', badgeEn:'Care'},
+  {id:2, category:'vitamins', icon:'🌿', ar:'منتج فيتامينات', en:'Vitamin product', descriptionAr:'مثال لمنتج من هذا القسم', descriptionEn:'Sample category product', price:7500, badgeAr:'فيتامينات', badgeEn:'Vitamins'},
+  {id:3, category:'baby', icon:'🍼', ar:'منتج للعناية بالأطفال', en:'Baby care product', descriptionAr:'مثال لمنتج أطفال', descriptionEn:'Sample baby product', price:6500, badgeAr:'للأطفال', badgeEn:'Baby'},
+  {id:4, category:'medical', icon:'🩺', ar:'مستلزم طبي', en:'Medical supply', descriptionAr:'مثال لمستلزم طبي', descriptionEn:'Sample medical supply', price:4000, badgeAr:'مستلزمات', badgeEn:'Medical'},
+  {id:5, category:'general', icon:'🧼', ar:'منتج للعناية اليومية', en:'Daily care product', descriptionAr:'مثال لمنتج عام', descriptionEn:'Sample general product', price:3000, badgeAr:'يومي', badgeEn:'Daily'},
+  {id:6, category:'medicine', icon:'💊', ar:'منتج دوائي تجريبي', en:'Sample medicine item', descriptionAr:'عرض توضيحي فقط — ليس دواءً للبيع', descriptionEn:'Demo only — not a real medicine', price:2500, badgeAr:'مثال', badgeEn:'Demo'}
+];
+
+const translations = {
+  ar: {
+    subtitle:'صحتك وراحتك أولويتنا',
+    welcome:'أهلًا بك في صيدليتك',
+    welcomeText:'ابحث عن احتياجاتك الصحية والعناية اليومية بسهولة.',
+    searchPlaceholder:'ابحث عن منتج...',
+    categories:'الأقسام',
+    browse:'تصفح المنتجات',
+    promoTitle:'اهتم بصحتك كل يوم',
+    promoText:'تصفح المنتجات واختر ما تحتاجه بسهولة.',
+    products:'المنتجات',
+    pharmacyInfo:'معلومات الصيدلية',
+    pharmacyInfoText:'يمكنك تقديم طلبك من خلال التطبيق. يخضع قبول الطلبات الدوائية لمراجعة الصيدلي والمتطلبات القانونية المعمول بها.',
+    cartTitle:'سلة المشتريات',
+    cartEmpty:'السلة فارغة. أضف المنتجات التي تحتاجها.',
+    total:'المجموع',
+    customerInfo:'معلومات الطلب',
+    namePlaceholder:'الاسم الكامل',
+    phonePlaceholder:'رقم الهاتف',
+    addressPlaceholder:'عنوان التوصيل',
+    notesPlaceholder:'ملاحظات إضافية (اختياري)',
+    deliveryLabel:'طريقة الاستلام',
+    deliveryHome:'توصيل إلى المنزل',
+    pickup:'الاستلام من الصيدلية',
+    demoNotice:'هذه واجهة أولية للعرض. لن يُرسل الطلب فعليًا حتى نربط التطبيق بقاعدة بيانات آمنة.',
+    submitOrder:'متابعة الطلب',
+    ordersTitle:'طلباتي',
+    ordersNotice:'ستظهر طلباتك هنا بعد ربط التطبيق بنظام الطلبات وتسجيل الدخول.',
+    accountTitle:'حسابي',
+    guestTitle:'التصفح كزائر',
+    guestText:'يمكنك تصفح المنتجات وإضافة العناصر إلى السلة. سنضيف تسجيل الدخول الاختياري في مرحلة لاحقة.',
+    contactTitle:'التواصل مع الصيدلية',
+    contactText:'ستُضاف بيانات التواصل وساعات العمل من إعدادات الصيدلية بعد تجهيز لوحة الإدارة.',
+    languageTitle:'اللغة',
+    footerText:'واجهة أولية — تخضع الطلبات الدوائية لمراجعة الصيدلي.',
+    navHome:'الرئيسية',
+    navCart:'السلة',
+    navOrders:'طلباتي',
+    navAccount:'حسابي',
+    add:'إضافة',
+    count:'منتج',
+    noProducts:'لا توجد منتجات مطابقة للبحث.',
+    added:'تمت إضافة المنتج إلى السلة.',
+    emptyCheckout:'أضف منتجًا واحدًا على الأقل قبل متابعة الطلب.',
+    demoOrder:'لم يُرسل طلب حقيقي. هذه واجهة تجريبية فقط، وسيُفعّل إرسال الطلب بعد إعداد قاعدة البيانات.',
+    currency:'د.ع'
+  },
+  en: {
+    subtitle:'Your health and comfort come first',
+    welcome:'Welcome to your pharmacy',
+    welcomeText:'Find health and daily care products with ease.',
+    searchPlaceholder:'Search products...',
+    categories:'Categories',
+    browse:'Browse products',
+    promoTitle:'Care for your health every day',
+    promoText:'Browse products and choose what you need.',
+    products:'Products',
+    pharmacyInfo:'Pharmacy information',
+    pharmacyInfoText:'You can prepare an order in the app. Medicine orders are subject to pharmacist review and applicable legal requirements.',
+    cartTitle:'Shopping cart',
+    cartEmpty:'Your cart is empty. Add products to get started.',
+    total:'Total',
+    customerInfo:'Order information',
+    namePlaceholder:'Full name',
+    phonePlaceholder:'Phone number',
+    addressPlaceholder:'Delivery address',
+    notesPlaceholder:'Additional notes (optional)',
+    deliveryLabel:'Fulfilment method',
+    deliveryHome:'Home delivery',
+    pickup:'Pick up at pharmacy',
+    demoNotice:'This is a preview interface. Orders will not be sent until a secure database is connected.',
+    submitOrder:'Continue',
+    ordersTitle:'My orders',
+    ordersNotice:'Your orders will appear here after the order system and sign-in are connected.',
+    accountTitle:'My account',
+    guestTitle:'Guest browsing',
+    guestText:'Browse products and add items to your cart. Optional sign-in will be added later.',
+    contactTitle:'Contact the pharmacy',
+    contactText:'Contact details and opening hours will be managed through the admin panel.',
+    languageTitle:'Language',
+    footerText:'Preview interface — medicine orders require pharmacist review.',
+    navHome:'Home',
+    navCart:'Cart',
+    navOrders:'Orders',
+    navAccount:'Account',
+    add:'Add',
+    count:'products',
+    noProducts:'No matching products found.',
+    added:'Product added to cart.',
+    emptyCheckout:'Add at least one product before continuing.',
+    demoOrder:'No real order was sent. This is a demo interface; order submission will be enabled after database setup.',
+    currency:'IQD'
+  }
+};
+
+let language = 'ar';
+let activeCategory = 'all';
+let cart = {};
+
+function t(key) {
+  return translations[language][key] || key;
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  }[char]));
+}
+
+function formatPrice(value) {
+  return new Intl.NumberFormat(language === 'ar' ? 'ar-IQ' : 'en-US').format(value)
+    + ' ' + t('currency');
+}
+
+function renderCategories() {
+  const root = document.getElementById('categories');
+
+  root.innerHTML = categories.map(category => `
+    <button
+      class="category ${activeCategory === category.id ? 'active' : ''}"
+      type="button"
+      data-category="${category.id}">
+      <span class="emoji">${category.icon}</span>
+      <span>${language === 'ar' ? category.ar : category.en}</span>
+    </button>
+  `).join('');
+
+  root.querySelectorAll('[data-category]').forEach(button => {
+    button.addEventListener('click', () => {
+      activeCategory = button.dataset.category;
+      renderCategories();
+      renderProducts();
+    });
+  });
+}
+
+function renderProducts() {
+  const root = document.getElementById('productGrid');
+  const query = document.getElementById('searchInput').value.trim().toLowerCase();
+
+  const filtered = products.filter(product => {
+    const categoryMatch = activeCategory === 'all' || product.category === activeCategory;
+    const searchable = [
+      product.ar,
+      product.en,
+      product.descriptionAr,
+      product.descriptionEn
+    ].join(' ').toLowerCase();
+
+    return categoryMatch && searchable.includes(query);
+  });
+
+  document.getElementById('productCount').textContent =
+    filtered.length + ' ' + t('count');
+
+  if (!filtered.length) {
+    root.innerHTML = `<div class="empty-state">${t('noProducts')}</div>`;
+    return;
+  }
+
+  root.innerHTML = filtered.map(product => `
+    <article class="product-card">
+      <div class="product-image">
+        <span>${product.icon}</span>
+        <span class="product-badge">
+          ${language === 'ar' ? product.badgeAr : product.badgeEn}
+        </span>
+      </div>
+
+      <div class="product-info">
+        <h3 class="product-name">
+          ${language === 'ar' ? product.ar : product.en}
+        </h3>
+
+        <div class="product-description">
+          ${language === 'ar' ? product.descriptionAr : product.descriptionEn}
+        </div>
+
+        <div class="product-bottom">
+          <span class="product-price">${formatPrice(product.price)}</span>
+          <button class="add-btn" type="button" data-add="${product.id}"
+            aria-label="${t('add')}">+</button>
+        </div>
+      </div>
+    </article>
+  `).join('');
+
+  root.querySelectorAll('[data-add]').forEach(button => {
+    button.addEventListener('click', () => addToCart(Number(button.dataset.add)));
+  });
+}
+
+function addToCart(id) {
+  const product = products.find(item => item.id === id);
+  if (!product) return;
+
+  cart[id] = (cart[id] || 0) + 1;
+  renderCart();
+  showPage('cartPage');
+}
+
+function renderCart() {
+  const root = document.getElementById('cartItems');
+  const ids = Object.keys(cart).filter(id => cart[id] > 0);
+  let total = 0;
+  let itemCount = 0;
+
+  root.innerHTML = ids.map(id => {
+    const product = products.find(item => item.id === Number(id));
+    if (!product) return '';
+
+    const quantity = cart[id];
+    total += product.price * quantity;
+    itemCount += quantity;
+
+    return `
+      <div class="cart-line">
+        <div>
+          <strong>${escapeHtml(language === 'ar' ? product.ar : product.en)}</strong>
+          <small>${formatPrice(product.price * quantity)}</small>
+        </div>
+        <div class="qty-controls">
+          <button type="button" data-minus="${id}" aria-label="Decrease">−</button>
+          <span>${quantity}</span>
+          <button type="button" data-plus="${id}" aria-label="Increase">+</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('cartEmpty').hidden = ids.length > 0;
+  document.getElementById('checkoutArea').hidden = ids.length === 0;
+  document.getElementById('cartTotal').textContent = formatPrice(total);
+
+  const count = document.getElementById('cartCount');
+  count.textContent = itemCount;
+  count.style.display = itemCount ? 'grid' : 'none';
+
+  root.querySelectorAll('[data-minus]').forEach(button => {
+    button.addEventListener('click', () => {
+      const id = button.dataset.minus;
+      cart[id] = Math.max(0, (cart[id] || 0) - 1);
+      if (!cart[id]) delete cart[id];
+      renderCart();
+    });
+  });
+
+  root.querySelectorAll('[data-plus]').forEach(button => {
+    button.addEventListener('click', () => {
+      const id = button.dataset.plus;
+      cart[id] = (cart[id] || 0) + 1;
+      renderCart();
+    });
+  });
+}
+
+function showPage(pageId) {
+  document.querySelectorAll('.page').forEach(page => {
+    page.classList.toggle('active', page.id === pageId);
+  });
+
+  document.querySelectorAll('.nav-btn').forEach(button => {
+    button.classList.toggle('active', button.dataset.page === pageId);
+  });
+
+  if (pageId === 'cartPage') renderCart();
+
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function setLanguage(nextLanguage) {
+  language = nextLanguage === 'en' ? 'en' : 'ar';
+
+  document.documentElement.lang = language;
+  document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+  document.body.classList.toggle('ltr', language === 'en');
+
+  document.getElementById('languageBtn').textContent =
+    language === 'ar' ? 'English' : 'العربية';
+
+  document.getElementById('languageBtn2').textContent =
+    language === 'ar' ? 'English' : 'العربية';
+
+  document.querySelectorAll('[data-i18n]').forEach(element => {
+    const key = element.dataset.i18n;
+    element.textContent = t(key);
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+    const key = element.dataset.i18nPlaceholder;
+    element.placeholder = t(key);
+  });
+
+  renderCategories();
+  renderProducts();
+  renderCart();
+}
+
+function showPageMessage(message) {
+  window.alert(message);
+}
+
+document.querySelectorAll('.nav-btn').forEach(button => {
+  button.addEventListener('click', () => showPage(button.dataset.page));
+});
+
+document.getElementById('searchInput').addEventListener('input', renderProducts);
+
+document.getElementById('languageBtn').addEventListener('click', () => {
+  setLanguage(language === 'ar' ? 'en' : 'ar');
+});
+
+document.getElementById('languageBtn2').addEventListener('click', () => {
+  setLanguage(language === 'ar' ? 'en' : 'ar');
+});
+
+document.getElementById('checkoutForm').addEventListener('submit', event => {
+  event.preventDefault();
+
+  const ids = Object.keys(cart).filter(id => cart[id] > 0);
+  if (!ids.length) {
+    showPageMessage(t('emptyCheckout'));
+    return;
+  }
+
+  /*
+    لا يتم إرسال أي بيانات إلى خادم هنا.
+    ربط الطلبات الفعلية سيُضاف بعد إعداد قاعدة بيانات آمنة.
+  */
+  showPageMessage(t('demoOrder'));
+});
+
+document.getElementById('pharmacyName').textContent = CONFIG.pharmacyName;
+document.getElementById('footerPharmacyName').textContent = CONFIG.pharmacyName;
+
+renderCategories();
+renderProducts();
+renderCart();
+setLanguage('ar');
+</script>
+</body>
+</html>
