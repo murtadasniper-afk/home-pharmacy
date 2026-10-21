@@ -1,0 +1,17 @@
+{
+  "name": "home-pharmacy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Home Pharmacy Android Application",
+  "scripts": {
+    "sync:android": "cap sync android",
+    "build:android": "cap sync android && cd android && gradle assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/core": "^7.4.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3"
+  }
+}
