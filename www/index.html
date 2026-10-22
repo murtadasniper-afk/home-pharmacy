@@ -756,12 +756,17 @@ text-align:right
 <script>
 'use strict';
   ‏// إعداد الاتصال بقاعدة بيانات صيدلية المنزل
-‏const SUPABASE_URL = 'ttps://udtknpvjmqwixugoibrq.supabase.co/rest/v1/';
+‏const SUPABASE_URL = 'https://udtknpvjmqwixugoibrq.supabase.co';
 ‏const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_JnRSWj6gYSmB75gJ5g_Akg_sALnxPuR';
 ‏
-‏const supabaseClient = window.supabase.createClient(
-‏    SUPABASE_URL,
-‏    SUPABASE_PUBLISHABLE_KEY
+‏let supabaseClient = null;
+
+if (window.supabase && window.supabase.createClient) {
+    supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+}
 ‏);
 
 const categories = [
