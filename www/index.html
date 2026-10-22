@@ -755,6 +755,14 @@ text-align:right
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 'use strict';
+  ‏// إعداد الاتصال بقاعدة بيانات صيدلية المنزل
+‏const SUPABASE_URL = 'ttps://udtknpvjmqwixugoibrq.supabase.co/rest/v1/';
+‏const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_JnRSWj6gYSmB75gJ5g_Akg_sALnxPuR';
+‏
+‏const supabaseClient = window.supabase.createClient(
+‏    SUPABASE_URL,
+‏    SUPABASE_PUBLISHABLE_KEY
+‏);
 
 const categories = [
   {id:'all',ar:'الكل',en:'All',icon:'✦'},
