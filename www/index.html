@@ -791,6 +791,10 @@ const products = [
   // تحميل المنتجات الحقيقية من قاعدة البيانات
 async function loadProductsFromSupabase() {
     try {
+        if (!supabaseClient) {
+            console.error('Supabase library is not loaded.');
+            return;
+        }
         const { data, error } = await supabaseClient
             .from('products')
             .select('id, name_ar, name_en, description, price, category_id, is_active')
