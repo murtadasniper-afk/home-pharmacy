@@ -783,6 +783,57 @@ const products = [
   {id:6,category:'medicine',icon:'💊',ar:'منتج دوائي تجريبي',en:'Sample medicine item',descriptionAr:'عرض توضيحي فقط — ليس دواءً للبيع',descriptionEn:'Demo only — not a real medicine',price:2500,badgeAr:'مثال',badgeEn:'Demo'}
 ];
 
+  // تحميل المنتجات الحقيقية من قاعدة البيانات
+async function loadProductsFromSupabase() {
+    try {
+        const { data, error } = await supabaseClient
+            .from('products')
+            .select('id, name_ar, name_en, description, price, category_id, is_active')
+            .eq('is_active', true)
+            .order('id', { ascending: true });
+
+        if (error) {
+            throw error;
+        }
+
+        const categoryMap = {
+            1: { id: 'medicine', ar: 'الأدوية', en: 'Medicines', icon: '💊' },
+            2: { id: 'beauty', ar: 'التجميل', en: 'Beauty', icon: '🧴' },
+            3: { id: 'vitamins', ar: 'الفيتامينات', en: 'Vitamins', icon: '🌿' },
+            4: { id: 'baby', ar: 'الأطفال', en: 'Baby', icon: '🍼' },
+            5: { id: 'medical', ar: 'المستلزمات الطبية', en: 'Medical supplies', icon: '🩺' },
+            6: { id: 'general', ar: 'مواد عامة', en: 'General goods', icon: '🧼' }
+        };
+
+        const realProducts = (data || []).map(p => {
+            const category = categoryMap[p.category_id] || categoryMap[6];
+
+            return {
+                id: p.id,
+                category: category.id,
+                icon: category.icon,
+                ar: p.name_ar,
+                en: p.name_en || p.name_ar,
+                descriptionAr: p.description || '',
+                descriptionEn: p.description || '',
+                price: Number(p.price),
+                badgeAr: category.ar,
+                badgeEn: category.en
+            };
+        });
+
+        products.splice(0, products.length, ...realProducts);
+        renderProducts();
+
+    } catch (error) {
+        console.error('Supabase products error:', error);
+
+        $('productGrid').innerHTML =
+            '<div class="empty-state">تعذر تحميل المنتجات. تحقق من اتصال قاعدة البيانات.</div>';
+
+        $('productCount').textContent = '';
+    }
+}
 const translations = {
 ar:{
 subtitle:'صحتك وراحتك أولويتنا',
