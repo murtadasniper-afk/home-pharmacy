@@ -485,4 +485,597 @@ text-align:right
 }
 .auth-panel.visible{display:block}
 .auth-panel h3{font-size:15px;margin:0 0 8px}
-.auth-panel .form
+.auth-panel .form-field{margin:8px 0}
+.auth-note{
+  font-size:11px;
+  color:var(--muted);
+  line-height:1.7;
+  margin-top:8px
+}
+
+@media(min-width:480px){
+  main{padding-inline:22px}
+  .product-image{height:145px}
+}
+</style>
+</head>
+
+<body>
+
+<section class="welcome-screen" id="welcomeScreen">
+  <div class="welcome-card">
+    <div class="welcome-logo">✚</div>
+    <h1>أهلاً بك في صيدليتك</h1>
+    <p>صحتك وراحتك أولويتنا<br>اختر طريقة الدخول للمتابعة</p>
+
+    <button class="action-btn" id="showLoginBtn" type="button">
+      تسجيل الدخول
+    </button>
+
+    <button class="secondary-btn" id="guestBtn" type="button">
+      الدخول كزائر
+    </button>
+
+    <div class="auth-panel" id="authPanel">
+      <h3>تسجيل الدخول</h3>
+      <input class="form-field" id="authName"
+        placeholder="الاسم الكامل" autocomplete="name">
+
+      <input class="form-field" id="authPhone"
+        type="tel" placeholder="رقم الهاتف" autocomplete="tel">
+
+      <input class="form-field" id="authPassword"
+        type="password" placeholder="كلمة المرور">
+
+      <button class="action-btn" id="demoLoginBtn" type="button">
+        متابعة
+      </button>
+
+      <div class="auth-note">
+        تسجيل الدخول الحقيقي يحتاج إلى ربط قاعدة بيانات.
+        يمكنك حالياً المتابعة كزائر.
+      </div>
+    </div>
+
+    <div class="welcome-small">
+      تصفح المنتجات دون إنشاء حساب.
+    </div>
+  </div>
+</section>
+
+<div class="app" id="appRoot" hidden>
+
+<header>
+  <div class="header-row">
+    <div class="brand">
+      <div class="brand-logo">✚</div>
+      <div>
+        <div class="brand-name" id="pharmacyName">صيدلية المنزل</div>
+        <div class="brand-subtitle" data-i18n="subtitle">
+          صحتك وراحتك أولويتنا
+        </div>
+      </div>
+    </div>
+
+    <button class="language-btn" id="languageBtn" type="button">
+      English
+    </button>
+  </div>
+
+  <div class="welcome">
+    <h1 data-i18n="welcome">أهلاً بك في صيدليتك</h1>
+    <p data-i18n="welcomeText">
+      ابحث عن احتياجاتك الصحية والعناية اليومية بسهولة.
+    </p>
+  </div>
+
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input id="searchInput" type="search"
+      placeholder="ابحث عن منتج..."
+      data-i18n-placeholder="searchPlaceholder">
+  </div>
+</header>
+
+<main>
+
+<section class="page active" id="homePage">
+  <div class="section-heading">
+    <h2 data-i18n="categories">الأقسام</h2>
+    <small data-i18n="browse">تصفح المنتجات</small>
+  </div>
+
+  <div class="categories" id="categories"></div>
+
+  <div class="promo">
+    <div>
+      <h3 data-i18n="promoTitle">اهتم بصحتك كل يوم</h3>
+      <p data-i18n="promoText">
+        تصفح المنتجات واختر ما تحتاجه بسهولة.
+      </p>
+    </div>
+    <div class="promo-icon">🌿</div>
+  </div>
+
+  <div class="section-heading">
+    <h2 data-i18n="products">المنتجات</h2>
+    <small id="productCount"></small>
+  </div>
+
+  <div class="product-grid" id="productGrid"></div>
+
+  <div class="info-box">
+    <h3 data-i18n="pharmacyInfo">معلومات الصيدلية</h3>
+    <p data-i18n="pharmacyInfoText">
+      تخضع الطلبات الدوائية لمراجعة الصيدلي.
+    </p>
+  </div>
+</section>
+
+<section class="page" id="cartPage">
+  <div class="section-heading">
+    <h2 data-i18n="cartTitle">سلة المشتريات</h2>
+  </div>
+
+  <div id="cartItems"></div>
+  <div id="cartEmpty" class="notice" data-i18n="cartEmpty">
+    السلة فارغة.
+  </div>
+
+  <div id="checkoutArea" hidden>
+    <div class="total-row">
+      <span data-i18n="total">المجموع</span>
+      <span id="cartTotal">0 د.ع</span>
+    </div>
+
+    <h3 data-i18n="customerInfo">معلومات الطلب</h3>
+
+    <form id="checkoutForm">
+      <input class="form-field" id="customerName" required
+        placeholder="الاسم الكامل"
+        data-i18n-placeholder="namePlaceholder">
+
+      <input class="form-field" id="customerPhone" type="tel"
+        required placeholder="رقم الهاتف"
+        data-i18n-placeholder="phonePlaceholder">
+
+      <textarea class="form-field" id="customerAddress"
+        required rows="3" placeholder="عنوان التوصيل"
+        data-i18n-placeholder="addressPlaceholder"></textarea>
+
+      <textarea class="form-field" id="customerNotes"
+        rows="2" placeholder="ملاحظات إضافية"
+        data-i18n-placeholder="notesPlaceholder"></textarea>
+
+      <label for="deliveryMethod" data-i18n="deliveryLabel">
+        طريقة الاستلام
+      </label>
+
+      <select class="form-field" id="deliveryMethod">
+        <option value="delivery" data-i18n="deliveryHome">
+          توصيل إلى المنزل
+        </option>
+        <option value="pickup" data-i18n="pickup">
+          الاستلام من الصيدلية
+        </option>
+      </select>
+
+      <div class="notice" data-i18n="demoNotice">
+        الطلبات غير مفعلة قبل ربط قاعدة البيانات.
+      </div>
+
+      <button class="action-btn" type="submit" data-i18n="submitOrder">
+        متابعة الطلب
+      </button>
+    </form>
+  </div>
+</section>
+
+<section class="page" id="ordersPage">
+  <div class="section-heading">
+    <h2 data-i18n="ordersTitle">طلباتي</h2>
+  </div>
+  <div class="notice" data-i18n="ordersNotice">
+    ستظهر الطلبات بعد ربط نظام الطلبات.
+  </div>
+</section>
+
+<section class="page" id="accountPage">
+  <div class="section-heading">
+    <h2 data-i18n="accountTitle">حسابي</h2>
+  </div>
+
+  <div class="info-box">
+    <h3 data-i18n="guestTitle">التصفح كزائر</h3>
+    <p data-i18n="guestText">
+      يمكنك تصفح المنتجات وإضافتها إلى السلة.
+    </p>
+  </div>
+
+  <div class="info-box">
+    <h3 data-i18n="contactTitle">التواصل مع الصيدلية</h3>
+    <p data-i18n="contactText">
+      ستضاف بيانات التواصل عند تجهيز لوحة الإدارة.
+    </p>
+  </div>
+
+  <div class="info-box">
+    <h3 data-i18n="languageTitle">اللغة</h3>
+    <button class="secondary-btn" id="languageBtn2" type="button">
+      English
+    </button>
+  </div>
+
+  <button class="secondary-btn" id="exitGuestBtn" type="button">
+    العودة إلى شاشة الدخول
+  </button>
+</section>
+
+</main>
+
+<footer>
+  <span id="footerPharmacyName">صيدلية المنزل</span>
+  <br>
+  <span data-i18n="footerText">
+    واجهة أولية — الطلبات الدوائية تخضع لمراجعة الصيدلي.
+  </span>
+
+  <div class="developer-credit">
+    <div>تطوير وبرمجة التطبيق</div>
+    <div class="developer-name">مرتضى الجاسمي</div>
+    <div class="developer-phone">07838231336</div>
+  </div>
+</footer>
+
+<nav class="bottom-nav" aria-label="التنقل">
+  <button class="nav-btn active" data-page="homePage" type="button">
+    <span class="nav-icon">⌂</span>
+    <span data-i18n="navHome">الرئيسية</span>
+  </button>
+
+  <button class="nav-btn" data-page="cartPage" type="button">
+    <span class="nav-icon">🛒</span>
+    <span class="cart-count" id="cartCount">0</span>
+    <span data-i18n="navCart">السلة</span>
+  </button>
+
+  <button class="nav-btn" data-page="ordersPage" type="button">
+    <span class="nav-icon">▤</span>
+    <span data-i18n="navOrders">طلباتي</span>
+  </button>
+
+  <button class="nav-btn" data-page="accountPage" type="button">
+    <span class="nav-icon">♙</span>
+    <span data-i18n="navAccount">حسابي</span>
+  </button>
+</nav>
+
+</div>
+
+<script>
+'use strict';
+
+const categories = [
+  {id:'all',ar:'الكل',en:'All',icon:'✦'},
+  {id:'medicine',ar:'الأدوية',en:'Medicines',icon:'💊'},
+  {id:'beauty',ar:'التجميل',en:'Beauty',icon:'🧴'},
+  {id:'vitamins',ar:'الفيتامينات',en:'Vitamins',icon:'🌿'},
+  {id:'baby',ar:'الأطفال',en:'Baby',icon:'🍼'},
+  {id:'medical',ar:'المستلزمات الطبية',en:'Medical supplies',icon:'🩺'},
+  {id:'general',ar:'مواد عامة',en:'General goods',icon:'🧼'}
+];
+
+const products = [
+  {id:1,category:'beauty',icon:'🧴',ar:'مرطب للعناية بالبشرة',en:'Skin moisturizer',descriptionAr:'مثال لمنتج تجميلي',descriptionEn:'Sample beauty product',price:5000,badgeAr:'عناية',badgeEn:'Care'},
+  {id:2,category:'vitamins',icon:'🌿',ar:'منتج فيتامينات',en:'Vitamin product',descriptionAr:'مثال لمنتج من هذا القسم',descriptionEn:'Sample category product',price:7500,badgeAr:'فيتامينات',badgeEn:'Vitamins'},
+  {id:3,category:'baby',icon:'🍼',ar:'منتج للعناية بالأطفال',en:'Baby care product',descriptionAr:'مثال لمنتج أطفال',descriptionEn:'Sample baby product',price:6500,badgeAr:'للأطفال',badgeEn:'Baby'},
+  {id:4,category:'medical',icon:'🩺',ar:'مستلزم طبي',en:'Medical supply',descriptionAr:'مثال لمستلزم طبي',descriptionEn:'Sample medical supply',price:4000,badgeAr:'مستلزمات',badgeEn:'Medical'},
+  {id:5,category:'general',icon:'🧼',ar:'منتج للعناية اليومية',en:'Daily care product',descriptionAr:'مثال لمنتج عام',descriptionEn:'Sample general product',price:3000,badgeAr:'يومي',badgeEn:'Daily'},
+  {id:6,category:'medicine',icon:'💊',ar:'منتج دوائي تجريبي',en:'Sample medicine item',descriptionAr:'عرض توضيحي فقط — ليس دواءً للبيع',descriptionEn:'Demo only — not a real medicine',price:2500,badgeAr:'مثال',badgeEn:'Demo'}
+];
+
+const translations = {
+ar:{
+subtitle:'صحتك وراحتك أولويتنا',
+welcome:'أهلاً بك في صيدليتك',
+welcomeText:'ابحث عن احتياجاتك الصحية والعناية اليومية بسهولة.',
+searchPlaceholder:'ابحث عن منتج...',
+categories:'الأقسام',browse:'تصفح المنتجات',
+promoTitle:'اهتم بصحتك كل يوم',
+promoText:'تصفح المنتجات واختر ما تحتاجه بسهولة.',
+products:'المنتجات',pharmacyInfo:'معلومات الصيدلية',
+pharmacyInfoText:'تخضع الطلبات الدوائية لمراجعة الصيدلي والمتطلبات القانونية.',
+cartTitle:'سلة المشتريات',cartEmpty:'السلة فارغة. أضف المنتجات التي تحتاجها.',
+total:'المجموع',customerInfo:'معلومات الطلب',
+namePlaceholder:'الاسم الكامل',phonePlaceholder:'رقم الهاتف',
+addressPlaceholder:'عنوان التوصيل',notesPlaceholder:'ملاحظات إضافية',
+deliveryLabel:'طريقة الاستلام',deliveryHome:'توصيل إلى المنزل',
+pickup:'الاستلام من الصيدلية',
+demoNotice:'واجهة أولية؛ لن يُرسل الطلب قبل ربط قاعدة بيانات آمنة.',
+submitOrder:'متابعة الطلب',
+ordersTitle:'طلباتي',ordersNotice:'ستظهر الطلبات بعد ربط نظام الطلبات.',
+accountTitle:'حسابي',guestTitle:'التصفح كزائر',
+guestText:'يمكنك تصفح المنتجات وإضافتها إلى السلة.',
+contactTitle:'التواصل مع الصيدلية',
+contactText:'ستضاف بيانات التواصل عند تجهيز لوحة الإدارة.',
+languageTitle:'اللغة',
+footerText:'واجهة أولية — الطلبات الدوائية تخضع لمراجعة الصيدلي.',
+navHome:'الرئيسية',navCart:'السلة',navOrders:'طلباتي',navAccount:'حسابي',
+count:'منتج',noProducts:'لا توجد منتجات مطابقة للبحث.',
+emptyCheckout:'أضف منتجاً قبل متابعة الطلب.',
+demoOrder:'لم يُرسل طلب حقيقي. هذه واجهة تجريبية.',
+currency:'د.ع'
+},
+en:{
+subtitle:'Your health and comfort come first',
+welcome:'Welcome to your pharmacy',
+welcomeText:'Find health and daily care products with ease.',
+searchPlaceholder:'Search products...',
+categories:'Categories',browse:'Browse products',
+promoTitle:'Care for your health every day',
+promoText:'Browse products and choose what you need.',
+products:'Products',pharmacyInfo:'Pharmacy information',
+pharmacyInfoText:'Medicine orders are subject to pharmacist review.',
+cartTitle:'Shopping cart',cartEmpty:'Your cart is empty.',
+total:'Total',customerInfo:'Order information',
+namePlaceholder:'Full name',phonePlaceholder:'Phone number',
+addressPlaceholder:'Delivery address',notesPlaceholder:'Additional notes',
+deliveryLabel:'Fulfilment method',deliveryHome:'Home delivery',
+pickup:'Pick up at pharmacy',
+demoNotice:'Preview only; orders require a secure database.',
+submitOrder:'Continue',ordersTitle:'My orders',
+ordersNotice:'Orders will appear after connecting an order system.',
+accountTitle:'My account',guestTitle:'Guest browsing',
+guestText:'Browse products and add them to your cart.',
+contactTitle:'Contact the pharmacy',
+contactText:'Contact details will be added later.',
+languageTitle:'Language',
+footerText:'Preview interface — pharmacist review is required.',
+navHome:'Home',navCart:'Cart',navOrders:'Orders',navAccount:'Account',
+count:'products',noProducts:'No matching products found.',
+emptyCheckout:'Add a product before continuing.',
+demoOrder:'No real order was sent. This is a demo.',
+currency:'IQD'
+}
+};
+
+let language='ar';
+let activeCategory='all';
+let cart={};
+
+const $ = id => document.getElementById(id);
+
+function t(key){
+  return translations[language][key] || key;
+}
+
+function escapeHtml(value){
+  return String(value).replace(/[&<>"']/g,c=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+
+function formatPrice(value){
+  return new Intl.NumberFormat(language==='ar'?'ar-IQ':'en-US')
+    .format(value)+' '+t('currency');
+}
+
+function renderCategories(){
+  const root=$('categories');
+
+  root.innerHTML=categories.map(c=>`
+    <button class="category ${activeCategory===c.id?'active':''}"
+      type="button" data-category="${c.id}">
+      <span class="emoji">${c.icon}</span>
+      <span>${language==='ar'?c.ar:c.en}</span>
+    </button>
+  `).join('');
+
+  root.querySelectorAll('[data-category]').forEach(button=>{
+    button.addEventListener('click',()=>{
+      activeCategory=button.dataset.category;
+      renderCategories();
+      renderProducts();
+    });
+  });
+}
+
+function renderProducts(){
+  const root=$('productGrid');
+  const query=$('searchInput').value.trim().toLowerCase();
+
+  const filtered=products.filter(p=>{
+    const categoryMatch=activeCategory==='all'||p.category===activeCategory;
+    const text=[p.ar,p.en,p.descriptionAr,p.descriptionEn]
+      .join(' ').toLowerCase();
+    return categoryMatch&&text.includes(query);
+  });
+
+  $('productCount').textContent=filtered.length+' '+t('count');
+
+  if(!filtered.length){
+    root.innerHTML=`<div class="empty-state">${t('noProducts')}</div>`;
+    return;
+  }
+
+  root.innerHTML=filtered.map(p=>`
+    <article class="product-card">
+      <div class="product-image">
+        <span>${p.icon}</span>
+        <span class="product-badge">${language==='ar'?p.badgeAr:p.badgeEn}</span>
+      </div>
+      <div class="product-info">
+        <h3 class="product-name">${escapeHtml(language==='ar'?p.ar:p.en)}</h3>
+        <div class="product-description">${escapeHtml(language==='ar'?p.descriptionAr:p.descriptionEn)}</div>
+        <div class="product-bottom">
+          <span class="product-price">${formatPrice(p.price)}</span>
+          <button class="add-btn" type="button" data-add="${p.id}">+</button>
+        </div>
+      </div>
+    </article>
+  `).join('');
+
+  root.querySelectorAll('[data-add]').forEach(button=>{
+    button.addEventListener('click',()=>addToCart(Number(button.dataset.add)));
+  });
+}
+
+function addToCart(id){
+  if(!products.some(p=>p.id===id))return;
+  cart[id]=(cart[id]||0)+1;
+  renderCart();
+  showPage('cartPage');
+}
+
+function renderCart(){
+  const root=$('cartItems');
+  const ids=Object.keys(cart).filter(id=>cart[id]>0);
+  let total=0,count=0;
+
+  root.innerHTML=ids.map(id=>{
+    const p=products.find(x=>x.id===Number(id));
+    if(!p)return '';
+    const quantity=cart[id];
+    total+=p.price*quantity;
+    count+=quantity;
+
+    return `
+      <div class="cart-line">
+        <div>
+          <strong>${escapeHtml(language==='ar'?p.ar:p.en)}</strong>
+          <small>${formatPrice(p.price*quantity)}</small>
+        </div>
+        <div class="qty-controls">
+          <button type="button" data-minus="${id}">−</button>
+          <span>${quantity}</span>
+          <button type="button" data-plus="${id}">+</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  $('cartEmpty').hidden=ids.length>0;
+  $('checkoutArea').hidden=ids.length===0;
+  $('cartTotal').textContent=formatPrice(total);
+  $('cartCount').textContent=count;
+  $('cartCount').style.display=count?'grid':'none';
+
+  root.querySelectorAll('[data-minus]').forEach(button=>{
+    button.addEventListener('click',()=>{
+      const id=button.dataset.minus;
+      cart[id]=Math.max(0,(cart[id]||0)-1);
+      if(!cart[id])delete cart[id];
+      renderCart();
+    });
+  });
+
+  root.querySelectorAll('[data-plus]').forEach(button=>{
+    button.addEventListener('click',()=>{
+      const id=button.dataset.plus;
+      cart[id]=(cart[id]||0)+1;
+      renderCart();
+    });
+  });
+}
+
+function showPage(pageId){
+  document.querySelectorAll('.page').forEach(page=>{
+    page.classList.toggle('active',page.id===pageId);
+  });
+
+  document.querySelectorAll('.nav-btn').forEach(button=>{
+    button.classList.toggle('active',button.dataset.page===pageId);
+  });
+
+  if(pageId==='cartPage')renderCart();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function setLanguage(next){
+  language=next==='en'?'en':'ar';
+  document.documentElement.lang=language;
+  document.documentElement.dir=language==='ar'?'rtl':'ltr';
+  document.body.classList.toggle('ltr',language==='en');
+
+  $('languageBtn').textContent=language==='ar'?'English':'العربية';
+  $('languageBtn2').textContent=language==='ar'?'English':'العربية';
+
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    el.textContent=t(el.dataset.i18n);
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    el.placeholder=t(el.dataset.i18nPlaceholder);
+  });
+
+  renderCategories();
+  renderProducts();
+  renderCart();
+}
+
+function enterApp(){
+  $('welcomeScreen').hidden=true;
+  $('appRoot').hidden=false;
+  showPage('homePage');
+}
+
+$('guestBtn').addEventListener('click',enterApp);
+
+$('showLoginBtn').addEventListener('click',()=>{
+  $('authPanel').classList.toggle('visible');
+});
+
+$('demoLoginBtn').addEventListener('click',()=>{
+  const phone=$('authPhone').value.trim();
+  const password=$('authPassword').value;
+
+  if(!phone||!password){
+    alert('أدخل رقم الهاتف وكلمة المرور، أو اختر الدخول كزائر.');
+    return;
+  }
+
+  alert('تسجيل الدخول الحقيقي غير مفعّل بعد. استخدم الدخول كزائر حالياً.');
+});
+
+$('exitGuestBtn').addEventListener('click',()=>{
+  $('appRoot').hidden=true;
+  $('welcomeScreen').hidden=false;
+  window.scrollTo(0,0);
+});
+
+document.querySelectorAll('.nav-btn').forEach(button=>{
+  button.addEventListener('click',()=>showPage(button.dataset.page));
+});
+
+$('searchInput').addEventListener('input',renderProducts);
+
+$('languageBtn').addEventListener('click',()=>{
+  setLanguage(language==='ar'?'en':'ar');
+});
+
+$('languageBtn2').addEventListener('click',()=>{
+  setLanguage(language==='ar'?'en':'ar');
+});
+
+$('checkoutForm').addEventListener('submit',event=>{
+  event.preventDefault();
+
+  if(!Object.keys(cart).some(id=>cart[id]>0)){
+    alert(t('emptyCheckout'));
+    return;
+  }
+
+  alert(t('demoOrder'));
+});
+
+$('pharmacyName').textContent='صيدلية المنزل';
+$('footerPharmacyName').textContent='صيدلية المنزل';
+
+renderCategories();
+renderProducts();
+renderCart();
+setLanguage('ar');
+</script>
+
+</body>
+</html>
