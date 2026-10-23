@@ -625,7 +625,7 @@ const demo=[
   {id:'demo6',category:'medicine',icon:'💊',ar:'منتج دوائي تجريبي',en:'Sample medicine item',da:'مثال فقط — ليس دواءً للبيع',de:'Demo only — not for sale',price:2500,ba:'مثال',be:'Demo'}
 ];
 
-let products=demo.slice();
+let products=[];
 let lang='ar';
 let active='all';
 let cart={};
@@ -844,6 +844,53 @@ addToCart(btn.dataset.add);
 });
 }
 
+async function loadProductsFromSupabase(){
+  if(!db){
+    console.error('Supabase connection is unavailable.');
+    return;
+  }
+
+  const {data,error}=await db
+    .from('products')
+    .select('id,name_ar,name_en,description,price,image_url,category_id,stock,is_active')
+    .eq('is_active',true)
+    .order('created_at',{ascending:false});
+
+  if(error){
+    console.error('Products loading failed:',error);
+    $('productGrid').innerHTML=
+      '<div class="empty">تعذر تحميل المنتجات. تحقق من الاتصال والصلاحيات.</div>';
+    return;
+  }
+
+  const categoryMap={
+    1:'medicine',
+    2:'beauty',
+    3:'vitamins',
+    4:'baby',
+    5:'medical',
+    6:'general'
+  };
+
+  products=(data||[]).map(function(p){
+    return {
+      id:String(p.id),
+      category:categoryMap[p.category_id]||'general',
+      icon:'📦',
+      ar:p.name_ar||'',
+      en:p.name_en||p.name_ar||'',
+      da:p.description||'',
+      de:p.description||'',
+      price:Number(p.price||0),
+      ba:'',
+      be:'',
+      image_url:p.image_url||''
+    };
+  });
+
+  renderProducts();
+  renderCart();
+}
 function addToCart(id){
 const product=products.find(function(p){
 return String(p.id)===String(id);
@@ -1013,6 +1060,7 @@ setLanguage('ar');
 renderCategories();
 renderProducts();
 renderCart();
+loadProductsFromSupabase();
 
 })();
 </script>
