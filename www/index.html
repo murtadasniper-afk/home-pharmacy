@@ -484,9 +484,22 @@ function applyBranding() {
   $('appFooter').textContent = branding.footer;
 
   const logo = safeImage(branding.logo);
-  $('brandLogo').innerHTML = logo
-    ? `<img src="${esc(logo)}" alt="شعار المتجر">`
-    : '✚';
+
+$('brandLogo').innerHTML = '';
+
+if (logo) {
+  const img = document.createElement('img');
+  img.alt = 'شعار صيدلية المنزل';
+  img.src = logo;
+
+  img.onerror = function () {
+    $('brandLogo').innerHTML = '✚';
+  };
+
+  $('brandLogo').appendChild(img);
+} else {
+  $('brandLogo').textContent = '✚';
+}
 
   const root = document.documentElement;
   root.style.setProperty('--primary', branding.primary);
