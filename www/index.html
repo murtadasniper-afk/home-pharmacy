@@ -265,6 +265,10 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:18px}
 /* إعدادات مشروع Supabase الجديد */
 const SUPABASE_URL = 'https://nfeohifelcdwhsjkuutf.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_NwDsuF_Lv-eSUzyLa6rHlQ_3tIuQKu8';
+const STORAGE_BUCKET = 'home pharmacy';
+const STORAGE_FOLDER = 'products';
+
+let selectedImageFile = null;  
 
 const $ = id => document.getElementById(id);
 const money = n => Number(n || 0).toLocaleString('en-US') + ' د.ع';
