@@ -769,7 +769,72 @@ async function signOut() {
   toast('تم تسجيل الخروج.');
 }
 
-async function saveProduct(event) {
+function previewSelectedImage(file) {
+  selectedImageFile = file || null;
+
+  const preview = $('productImagePreview');
+  const removeButton = $('removeSelectedImage');
+
+  if (!file) {
+    preview.hidden = true;
+    preview.removeAttribute('src');
+    removeButton.hidden = true;
+    return;
+  }
+
+  if (!file.type.startsWith('image/')) {
+    selectedImageFile = null;
+    $('productImageFile').value = '';
+    toast('يرجى اختيار ملف صورة صالح.');
+    return;
+  }
+
+  if (file.size > 8 * 1024 * 1024) {
+    selectedImageFile = null;
+    $('productImageFile').value = '';
+    toast('حجم الصورة أكبر من 8 ميغابايت. اختر صورة أصغر.');
+    return;
+  }
+
+  preview.src = URL.createObjectURL(file);
+  preview.hidden = false;
+  removeButton.hidden = false;
+}
+
+async function uploadProductImage(file) {
+  if (!user || !isAdmin) {
+    throw new Error('يجب تسجيل الدخول بحساب المدير لرفع الصور.');
+  }
+
+  const extension =
+    (file.name.split('.').pop() || 'jpg')
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, '') || 'jpg';
+
+  const path =
+    `${STORAGE_FOLDER}/${Date.now()}-${crypto.randomUUID()}.${extension}`;
+
+  const { data, error } = await db.storage
+    .from(STORAGE_BUCKET)
+    .upload(path, file, {
+      cacheControl: '3600',
+      upsert: false,
+      contentType: file.type || 'image/jpeg'
+    });
+
+  if (error) throw error;
+
+  const { data: publicData } = db.storage
+    .from(STORAGE_BUCKET)
+    .getPublicUrl(data.path);
+
+  if (!publicData?.publicUrl) {
+    throw new Error('تعذر الحصول على رابط الصورة.');
+  }
+
+  return publicData.publicUrl;
+}
+  async function saveProduct(event) {
   event.preventDefault();
   if (!user || !isAdmin) return toast('هذه الوظيفة للمدير فقط.');
 
