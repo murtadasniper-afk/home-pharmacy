@@ -857,6 +857,10 @@ async function uploadProductImage(file) {
   }
 
   try {
+    if (selectedImageFile) {
+      payload.image_url = await uploadProductImage(selectedImageFile);
+    }
+
     const query = id
       ? db.from('products').update(payload).eq('id', id)
       : db.from('products').insert(payload);
