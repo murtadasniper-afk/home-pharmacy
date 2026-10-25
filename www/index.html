@@ -208,7 +208,38 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:18px}
       <textarea class="field" id="productDescription" placeholder="وصف المنتج"></textarea>
       <input class="field" id="productPrice" type="number" min="0" step="1" required placeholder="السعر بالدينار العراقي">
       <input class="field" id="productStock" type="number" min="0" step="1" required placeholder="المخزون">
-      <input class="field" id="productImage" type="url" placeholder="رابط صورة المنتج">
+      <div class="image-picker">
+  <label for="productImageFile">📷 اختيار صورة من الهاتف</label>
+
+  <input
+    id="productImageFile"
+    type="file"
+    accept="image/*"
+    capture="environment"
+    hidden
+  >
+
+  <small>
+    اختر صورة من معرض الهاتف أو التقط صورة بالكاميرا.
+    ستُرفع الصورة عند حفظ المنتج.
+  </small>
+
+  <img id="productImagePreview" alt="معاينة الصورة" hidden>
+
+  <button
+    class="secondary"
+    id="removeSelectedImage"
+    type="button"
+    hidden
+  >إلغاء الصورة المختارة</button>
+</div>
+
+<input
+  class="field"
+  id="productImage"
+  type="url"
+  placeholder="رابط الصورة الحالية (اختياري)"
+>
       <select class="field" id="productCategory" required></select>
       <button class="action" type="submit">حفظ المنتج</button>
       <button class="secondary" id="cancelProductEdit" type="button">إلغاء التعديل</button>
