@@ -955,6 +955,8 @@ function editProduct(id) {
   $('productImage').value = p.image_url || '';
   $('productCategory').value = p.category_id || '';
 
+  selectedImageFile = null;
+previewSelectedImage(null);
   showPage('accountPage');
   $('productForm').scrollIntoView({ behavior:'smooth' });
 }
