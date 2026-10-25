@@ -870,6 +870,9 @@ async function uploadProductImage(file) {
 
     $('productForm').reset();
     $('editProductId').value = '';
+    selectedImageFile = null;
+previewSelectedImage(null);
+$('productImageFile').value = '';
     await loadProducts();
     toast('تم حفظ المنتج.');
   } catch (e) {
