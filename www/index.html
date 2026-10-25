@@ -1034,6 +1034,14 @@ $('languageBtn').addEventListener('click', () => {
   renderProducts();
 });
 
+$('productImageFile').addEventListener('change', event => {
+  previewSelectedImage(event.target.files?.[0] || null);
+});
+
+$('removeSelectedImage').addEventListener('click', () => {
+  $('productImageFile').value = '';
+  previewSelectedImage(null);
+});
 /* تهيئة التطبيق */
 init().catch(error => {
   console.error(error);
